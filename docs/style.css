@@ -1,0 +1,43 @@
+
+@font-face
+{
+  font-family: 'machineFont';
+  src: url('fonts/ibmplex.ttf') format('truetype');
+}
+
+body
+{
+	padding:20pt;
+	font-family: 'machineFont', monospace ;
+	font-style: normal;
+	color: rgb(0, 160, 164);
+	background-color: rgb(40,40,40);
+}
+
+h1
+{
+	color: rgb(100, 100, 0);
+}
+
+h2
+{
+	color: rgb(100, 50, 50);
+}
+
+h3
+{
+	color: rgb(0, 100, 100);
+}
+
+.definition
+{
+	margin-left: 20pt;
+	margin-bottom: 1cm;
+}
+
+pre
+{
+	font-family: 'machineFont', monospace ;
+	font-style: normal;
+
+}

@@ -1,0 +1,28 @@
+# Pantalla
+
+colorFondoR : 189
+colorFondoG : 104
+colorFondoB : 47
+
+anchoPantalla : 640
+altoPantalla : 480
+
+pantallaCompleta : 0
+
+# Tilemaps
+
+tamanyoTile : 64
+anchoTilemaps : 20
+altoTilemaps : 20
+numTiposTile : 10
+numTilemaps : 3
+
+# Sprites
+
+numSprites : 2
+
+# Musica
+
+numMusicas : 2
+
+
