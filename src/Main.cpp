@@ -119,12 +119,13 @@ int main()
 		NOE_PonTile(1, posicionX, posicionY, 1);
 
 		NOE_LimpiaPantalla(20,20,20);
+		NOE_DibujaDecorado(0);
 		NOE_DibujaTilemap(0);
 		NOE_DibujaTilemap(1);
 		NOE_DibujaSprite(1, 0, 0, 100, 100, 1, 1);
 		NOE_MuestraPantalla();
 		
-		NOE_PonTile(1, posicionX, posicionY, tipoTileVacio);
+		NOE_PonTile(1, posicionX, posicionY, noeTipoTileVacio);
 
 		ciclo ++;
 		

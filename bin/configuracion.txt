@@ -21,6 +21,10 @@ numTilemaps : 3
 
 numSprites : 2
 
+# Decorados
+
+numDecorados : 8
+
 # Musica
 
 numMusicas : 2

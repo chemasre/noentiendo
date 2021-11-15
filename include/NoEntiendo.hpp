@@ -3,8 +3,8 @@
 
 // Constantes
 
-const int tipoTileVacio    = 0;
-const int colisionVacia    = 0;
+const int noeTipoTileVacio    = 0;
+const int noeColisionVacia    = 0;
 
 // Enums
 
@@ -82,6 +82,10 @@ void NOE_DibujaTilemap(int numTilemap);
 // Sprites
 
 void NOE_DibujaSprite(int sprite, int x, int y, int ancho, int alto, bool invertirX, bool invertirY);
+
+// Decorados
+
+void NOE_DibujaDecorado(int decorado);
 
 // Tiempo
 

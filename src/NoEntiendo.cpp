@@ -16,6 +16,7 @@
 #define RUTA_TIPOS_TILE "Tiles/"
 #define RUTA_MUSICAS "Musicas/"
 #define RUTA_SPRITES "Sprites/"
+#define RUTA_DECORADOS "Decorados/"
 
 #define VERSION "1.2"
 
@@ -31,6 +32,7 @@ struct Configuracion
 	int numTiposTile = 32;
 	int numTilemaps = 3;
 	int numSprites = 32;
+	int numDecorados = 8;
 	int numMusicas = 8;
 	int tiempoMinimoActualizacion = 10;
 };
@@ -43,6 +45,7 @@ int**           colisionMap;
 sfMusic**		musicas;
 sfClock*		timer;
 sfSprite**		sprites;
+sfSprite**		decorados;
 sfColor         colorLimpiar;
 
 int tiempoDesdeActualizacion;
@@ -190,6 +193,7 @@ bool NOE_Inicia()
 	printf("  altoTilemaps...... %d tiles\n", configuracion.altoTilemaps);
 	printf("  numTilemaps....... %d\n", configuracion.numTilemaps);
 	printf("  numSprites........ %d\n", configuracion.numSprites);
+	printf("  numDecorados...... %d\n", configuracion.numDecorados);
 	printf("  numMusicas........ %d\n", configuracion.numMusicas);
 	printf("\n");
 
@@ -252,6 +256,19 @@ bool NOE_Inicia()
 		
 	}
 	
+	decorados = new sfSprite*[c.numDecorados];
+	
+	for(int i = 0; i < c.numDecorados; i ++)
+	{
+		sfTexture* texture;
+		
+		sprintf(ruta, "%s%s%02d.png", RUTA_RECURSOS, RUTA_DECORADOS, i);
+		texture = sfTexture_createFromFile(ruta, NULL);
+
+		decorados[i] = sfSprite_create();
+		sfSprite_setTexture(decorados[i], texture, sfTrue);
+		
+	}
 	
 	musicas = new sfMusic*[c.numMusicas];
 	
@@ -276,7 +293,7 @@ bool NOE_Inicia()
 			
 			for(int x = 0; x < c.anchoTilemaps; x ++)
 			{
-				tilemaps[t][y][x] = tipoTileVacio;
+				tilemaps[t][y][x] = noeTipoTileVacio;
 			}
 		}
 		
@@ -292,7 +309,7 @@ bool NOE_Inicia()
 		
 		for(int x = 0; x < c.anchoTilemaps; x ++)
 		{
-			colisionMap[y][x] = colisionVacia;
+			colisionMap[y][x] = noeColisionVacia;
 		}
 	}
 
@@ -514,6 +531,26 @@ void NOE_DibujaSprite(int sprite, int x, int y, int ancho, int alto, bool invert
 	
 }
 
+void NOE_DibujaDecorado(int decorado)
+{
+	Configuracion &c = configuracion;	
+
+	sfSprite* decorado2 = decorados[decorado];
+		
+	const sfTexture* textura = sfSprite_getTexture(decorado2);
+	sfVector2u tamanyo = sfTexture_getSize(textura);
+
+		
+	sfVector2f escala = { (float) c.anchoPantalla / tamanyo.x, (float) c.altoPantalla  / tamanyo.y  };
+	sfSprite_setScale(decorado2, escala);
+
+	sfVector2f position = { 0, 0 };
+	sfSprite_setPosition(decorado2, position);
+
+	sfRenderWindow_drawSprite(ventana, decorado2, NULL);
+	
+}
+
 
 void NOE_ReproduceMusica(int musica)
 {
@@ -580,7 +617,7 @@ int NOE_ObtenTile(int tilemap, int posicionX, int posicionY)
 	}
 	else
 	{
-		return tipoTileVacio;
+		return noeTipoTileVacio;
 	}
 }
 
@@ -600,6 +637,10 @@ void NOE_LimpiaPantalla(int r, int g, int b)
    sfRenderWindow_clear(ventana, color);
 }
 
+void NOE_DibujaFondo(int fondo)
+{
+}
+
 void NOE_DibujaTilemap(int indice)
 {
 	Configuracion &c = configuracion;
@@ -609,7 +650,7 @@ void NOE_DibujaTilemap(int indice)
 		for(int x = 0; x < c.anchoTilemaps; x++)
 		{
 			int tipoTile = tilemaps[indice][y][x];
-			if(tipoTile != tipoTileVacio)
+			if(tipoTile != noeTipoTileVacio)
 			{
 				sfSprite* sprite = tiposTile[tipoTile];
 				
