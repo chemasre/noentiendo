@@ -158,11 +158,11 @@ bool NOE_Inicia()
 				{
 					configuracion.altoTilemaps = atoi(parte2);
 				}
-				else if(strcmp(parte1, "ANCHOVENTANA") == 0)
+				else if(strcmp(parte1, "ANCHOPANTALLA") == 0)
 				{
 					configuracion.anchoPantalla = atoi(parte2);
 				}
-				else if(strcmp(parte1, "ALTOVENTANA") == 0)
+				else if(strcmp(parte1, "ALTOPANTALLA") == 0)
 				{
 					configuracion.altoPantalla = atoi(parte2);
 				}

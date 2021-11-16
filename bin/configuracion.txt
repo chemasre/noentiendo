@@ -4,8 +4,8 @@ colorFondoR : 189
 colorFondoG : 104
 colorFondoB : 47
 
-anchoPantalla : 640
-altoPantalla : 480
+anchoPantalla : 1280
+altoPantalla : 720
 
 pantallaCompleta : 0
 

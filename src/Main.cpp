@@ -74,7 +74,7 @@ int main()
 		
 		if(NOE_ObtenTeclaPulsada(TECLA_ESPACIO))
 		{
-			if(musica == 0) { NOE_ReproduceMusica(1); musica = 1; }
+			if(musica == 0) { NOE_ReproduceMusica(3); musica = 3; }
 			else { NOE_ReproduceMusica(0); musica = 0; }
 		}		
 		
