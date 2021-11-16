@@ -17,39 +17,50 @@ enum NOE_Sistema
 
 enum NOE_Tecla
 {
-	TECLA_A,
-	TECLA_B,
-	TECLA_C,
-	TECLA_D,
-	TECLA_E,
-	TECLA_F,
-	TECLA_G,
-	TECLA_H,
-	TECLA_I,
-	TECLA_J,
-	TECLA_K,
-	TECLA_L,
-	TECLA_M,
-	TECLA_N,
-	TECLA_O,
-	TECLA_P,
-	TECLA_Q,
-	TECLA_R,
-	TECLA_S,
-	TECLA_T,
-	TECLA_U,
-	TECLA_V,
-	TECLA_W,
-	TECLA_X,
-	TECLA_Y,
-	TECLA_Z,
-	TECLA_ESPACIO,
-	TECLA_ESCAPE,
-	TECLA_IZQUIERDA,
-	TECLA_DERECHA,
-	TECLA_ARRIBA,
-	TECLA_ABAJO,
-	
+	NOE_TECLA_ESPACIO,
+	NOE_TECLA_A,
+	NOE_TECLA_B,
+	NOE_TECLA_C,
+	NOE_TECLA_D,
+	NOE_TECLA_E,
+	NOE_TECLA_F,
+	NOE_TECLA_G,
+	NOE_TECLA_H,
+	NOE_TECLA_I,
+	NOE_TECLA_J,
+	NOE_TECLA_K,
+	NOE_TECLA_L,
+	NOE_TECLA_M,
+	NOE_TECLA_N,
+	NOE_TECLA_O,
+	NOE_TECLA_P,
+	NOE_TECLA_Q,
+	NOE_TECLA_R,
+	NOE_TECLA_S,
+	NOE_TECLA_T,
+	NOE_TECLA_U,
+	NOE_TECLA_V,
+	NOE_TECLA_W,
+	NOE_TECLA_X,
+	NOE_TECLA_Y,
+	NOE_TECLA_Z,
+	NOE_TECLA_1,
+	NOE_TECLA_2,
+	NOE_TECLA_3,
+	NOE_TECLA_4,
+	NOE_TECLA_5,
+	NOE_TECLA_6,
+	NOE_TECLA_7,
+	NOE_TECLA_8,
+	NOE_TECLA_9,
+	NOE_TECLA_0,
+	NOE_TECLA_ESCAPE,
+	NOE_TECLA_IZQUIERDA,
+	NOE_TECLA_DERECHA,
+	NOE_TECLA_ARRIBA,
+	NOE_TECLA_ABAJO,
+	NOE_TECLA_ENTRAR,
+	NOE_TECLA_BORRA_ATRAS
 	
 };
 
@@ -63,6 +74,11 @@ void NOE_Finaliza();
 
 void NOE_LimpiaPantalla(int r, int g, int b);
 void NOE_MuestraPantalla();
+
+// Entrada
+
+const char *NOE_ObtenEntrada();
+void NOE_LimpiaEntrada();
 
 
 // Camara
@@ -87,6 +103,11 @@ void NOE_DibujaSprite(int sprite, int x, int y, int ancho, int alto, bool invert
 
 void NOE_DibujaDecorado(int decorado);
 
+// Texto
+
+void NOE_DibujaCaracter(char caracter, int x, int y, int ancho, int alto, int font);
+void NOE_DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int altoCaracter, int font);
+
 // Tiempo
 
 void NOE_Espera(int tiempo);
@@ -95,6 +116,8 @@ int NOE_ObtenTiempoDesdeActualizacion();
 // Aleatoriedad
 
 int NOE_ObtenNumeroAleatorio(int minimo, int maximo);
+
+
 
 // Cambios de coordenadas
 
@@ -111,9 +134,12 @@ int NOE_ConvierteTileAMundoY(int y);
 // Entrada
 
 bool NOE_ObtenTeclaPulsada(NOE_Tecla tecla);
+bool NOE_ObtenTeclaArriba(NOE_Tecla tecla);
+bool NOE_ObtenTeclaAbajo(NOE_Tecla tecla);
 int  NOE_ObtenPosicionRatonX();
 int  NOE_ObtenPosicionRatonY();
 bool NOE_ObtenBotonRaton();
+
 
 // Audio
 

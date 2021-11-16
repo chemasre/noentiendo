@@ -9,6 +9,10 @@ altoPantalla : 720
 
 pantallaCompleta : 0
 
+# Entrada
+
+longitudLineaEntrada : 100
+
 # Tilemaps
 
 tamanyoTile : 64

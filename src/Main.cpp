@@ -34,49 +34,53 @@ int main()
 	NOE_ReproduceMusica(musica);
 
 
-	while(!NOE_ObtenTeclaPulsada(TECLA_ESCAPE))
+	while(!NOE_ObtenTeclaPulsada(NOE_TECLA_ESCAPE))
 	{
 		NOE_Actualiza();		
 
-		if(NOE_ObtenTeclaPulsada(TECLA_D))
+		if(NOE_ObtenTeclaPulsada(NOE_TECLA_D))
 		{
 			direccionX = 1;			
 		}
-		else if(NOE_ObtenTeclaPulsada(TECLA_A))
+		else if(NOE_ObtenTeclaPulsada(NOE_TECLA_A))
 		{
 			direccionX = -1;
 		}
-		if(NOE_ObtenTeclaPulsada(TECLA_S))
+		if(NOE_ObtenTeclaPulsada(NOE_TECLA_S))
 		{
 			direccionY = 1;
 		}
-		else if(NOE_ObtenTeclaPulsada(TECLA_W))
+		else if(NOE_ObtenTeclaPulsada(NOE_TECLA_W))
 		{
 			direccionY = -1;
 		}
 
-		if(NOE_ObtenTeclaPulsada(TECLA_DERECHA))
+		if(NOE_ObtenTeclaPulsada(NOE_TECLA_DERECHA))
 		{
 			direccionCamaraX = 2;			
 		}
-		else if(NOE_ObtenTeclaPulsada(TECLA_IZQUIERDA))
+		else if(NOE_ObtenTeclaPulsada(NOE_TECLA_IZQUIERDA))
 		{
 			direccionCamaraX = -2;
 		}
-		if(NOE_ObtenTeclaPulsada(TECLA_ABAJO))
+		if(NOE_ObtenTeclaPulsada(NOE_TECLA_ABAJO))
 		{
 			direccionCamaraY = 2;
 		}
-		else if(NOE_ObtenTeclaPulsada(TECLA_ARRIBA))
+		else if(NOE_ObtenTeclaPulsada(NOE_TECLA_ARRIBA))
 		{
 			direccionCamaraY = -2;
 		}		
 		
-		if(NOE_ObtenTeclaPulsada(TECLA_ESPACIO))
+		if(NOE_ObtenTeclaPulsada(NOE_TECLA_ENTRAR))
 		{
 			if(musica == 0) { NOE_ReproduceMusica(3); musica = 3; }
 			else { NOE_ReproduceMusica(0); musica = 0; }
+			
+			NOE_LimpiaEntrada();
+			
 		}		
+		
 		
 		NOE_PonTile(0, 5, 5, 7);
 		
@@ -116,6 +120,7 @@ int main()
 			
 		}
 		
+		
 		NOE_PonTile(1, posicionX, posicionY, 1);
 
 		NOE_LimpiaPantalla(20,20,20);
@@ -123,6 +128,8 @@ int main()
 		NOE_DibujaTilemap(0);
 		NOE_DibujaTilemap(1);
 		NOE_DibujaSprite(1, 0, 0, 100, 100, 1, 1);
+		NOE_DibujaTexto("BUFFER DE ENTRADA", 0, 0, 32, 32, 0);		
+		NOE_DibujaTexto(NOE_ObtenEntrada(), 0, 32, 32, 32, 0);		
 		NOE_MuestraPantalla();
 		
 		NOE_PonTile(1, posicionX, posicionY, noeTipoTileVacio);

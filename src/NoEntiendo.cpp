@@ -8,17 +8,22 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <process.h>
-#define MAX_RUTA 200
-#define MAX_LINEA 200
-#define MAX_CADENA 200
-#define NOMBRE_LIBRERIA "NoEntiendo"
-#define RUTA_RECURSOS "Recursos/"
-#define RUTA_TIPOS_TILE "Tiles/"
-#define RUTA_MUSICAS "Musicas/"
-#define RUTA_SPRITES "Sprites/"
-#define RUTA_DECORADOS "Decorados/"
+#define NOE_RECURSOS_MAXRUTA 200
+#define NOE_CONFIG_MAXLINEA 200
+#define NOE_UI_MAXCADENA 200
+#define NOE_NOMBRE "NoEntiendo"
+#define NOE_RECURSOS_RUTA_RECURSOS "Recursos/"
+#define NOE_RECURSOS_RUTA_TIPOS_TILE "Tiles/"
+#define NOE_RECURSOS_RUTA_MUSICAS "Musicas/"
+#define NOE_RECURSOS_RUTA_SPRITES "Sprites/"
+#define NOE_RECURSOS_RUTA_DECORADOS "Decorados/"
+#define NOE_RECURSOS_RUTA_FUENTES "Fuentes/"
 
-#define VERSION "1.2"
+#define NOE_VERSION "1.2"
+
+#define NOE_TECLADO_NUMTECLAS (NOE_TECLA_BORRA_ATRAS + 1)
+#define NOE_ENTRADA_PRIMERA_TECLA (NOE_TECLA_ESPACIO)
+#define NOE_ENTRADA_ULTIMA_TECLA (NOE_TECLA_0)
 
 struct Configuracion
 {
@@ -33,8 +38,10 @@ struct Configuracion
 	int numTilemaps = 3;
 	int numSprites = 32;
 	int numDecorados = 8;
+	int numFuentes = 2;
 	int numMusicas = 8;
 	int tiempoMinimoActualizacion = 10;
+	int longitudLineaEntrada = 100;
 };
 
 sfRenderWindow* ventana;
@@ -48,10 +55,248 @@ sfSprite**		sprites;
 sfSprite**		decorados;
 sfColor         colorLimpiar;
 
+sfSprite***		fuentes;
+
 int tiempoDesdeActualizacion;
 
 int camaraX = 0;
 int camaraY = 0;
+
+
+sfKeyCode tecladoCodigosSFTecla[] = 
+{
+	sfKeySpace,
+	sfKeyA,
+	sfKeyB,
+	sfKeyC,
+	sfKeyD,
+	sfKeyE,
+	sfKeyF,
+	sfKeyG,
+	sfKeyH,
+	sfKeyI,
+	sfKeyJ,
+	sfKeyK,
+	sfKeyL,
+	sfKeyM,
+	sfKeyN,
+	sfKeyO,
+	sfKeyP,
+	sfKeyQ,
+	sfKeyR,
+	sfKeyS,
+	sfKeyT,
+	sfKeyU,
+	sfKeyV,
+	sfKeyW,
+	sfKeyX,
+	sfKeyY,
+	sfKeyZ,
+	sfKeyNum1,
+	sfKeyNum2,
+	sfKeyNum3,
+	sfKeyNum4,
+	sfKeyNum5,
+	sfKeyNum6,
+	sfKeyNum7,
+	sfKeyNum8,
+	sfKeyNum9,
+	sfKeyNum0,
+	sfKeyEscape,
+    sfKeyLeft, 
+    sfKeyRight,
+    sfKeyUp,   
+    sfKeyDown,
+	sfKeyReturn,
+	sfKeyBack
+};
+
+bool tecladoTeclasPulsadas[] =
+{
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+    false, 
+    false, 
+    false,
+    false,   
+    false,
+    false,
+	false
+};
+
+bool tecladoTeclasPulsadasAnteriores[] =
+{
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+	false,
+    false, 
+    false,
+    false,   
+    false,
+    false,
+	false
+};
+
+
+char entradaCaracteresTecla[] = 
+{
+	' ',
+	'A',
+	'B',
+	'C',
+	'D',
+	'E',
+	'F',
+	'G',
+	'H',
+	'I',
+	'J',
+	'K',
+	'L',
+	'M',
+	'N',
+	'O',
+	'P',
+	'Q',
+	'R',
+	'S',
+	'T',
+	'U',
+	'V',
+	'W',
+	'X',
+	'Y',
+	'Z',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'0'
+};
+
+char fuenteCaracteresGlifo[] =
+{
+	' ',
+	'A',
+	'B',
+	'C',
+	'D',
+	'E',
+	'F',
+	'G',
+	'H',
+	'I',
+	'J',
+	'K',
+	'L',
+	'M',
+	'N',
+	'O',
+	'P',
+	'Q',
+	'R',
+	'S',
+	'T',
+	'U',
+	'V',
+	'W',
+	'X',
+	'Y',
+	'Z',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'0'
+	
+};
+
+int fuenteNumGlifos = 37;
+
+
+char *entradaBuffer;
+int entradaBufferOcupadas;
+
 
 Configuracion configuracion;
 
@@ -61,7 +306,7 @@ void NOE_RellenaTilemap(int tilemap, int tipoBloque);
 bool NOE_Inicia()
 {
 	printf("----------------------------------------------\n");
-	printf("  %s Version %s\n", NOMBRE_LIBRERIA, VERSION);
+	printf("  %s Version %s\n", NOE_NOMBRE, NOE_VERSION);
 	printf("----------------------------------------------\n");
 	printf("\n");
 
@@ -69,14 +314,14 @@ bool NOE_Inicia()
 
 	configuracion = Configuracion();
 
-	char linea1[MAX_LINEA];
-	char linea2[MAX_LINEA];
+	char linea1[NOE_CONFIG_MAXLINEA];
+	char linea2[NOE_CONFIG_MAXLINEA];
 	FILE* f = fopen("configuracion.txt","r");
 	char* r = 0;
 
 	do
 	{
-		r = fgets(linea1, MAX_LINEA, f);
+		r = fgets(linea1, NOE_CONFIG_MAXLINEA, f);
 
 		if(r != 0)
 		{
@@ -110,8 +355,8 @@ bool NOE_Inicia()
 			{
 				// Parse line
 
-				char parte1[MAX_LINEA];
-				char parte2[MAX_LINEA];
+				char parte1[NOE_CONFIG_MAXLINEA];
+				char parte2[NOE_CONFIG_MAXLINEA];
 
 				int j = 0;
 				int foundSeparator = 0;
@@ -170,6 +415,10 @@ bool NOE_Inicia()
 				{
 					configuracion.pantallaCompleta = atoi(parte2);
 				}
+				else if(strcmp(parte1, "LONGITUDLINEAENTRADA") == 0)
+				{
+					configuracion.longitudLineaEntrada = atoi(parte2);
+				}
 				
 			}
 
@@ -185,16 +434,18 @@ bool NOE_Inicia()
 
 	printf("Configuracion:\n");
 	printf("\n");
-	printf("  anchoPantalla..... %d pixels\n", configuracion.anchoPantalla);
-	printf("  altoPantalla...... %d pixels\n", configuracion.altoPantalla);
-	printf("  pantallaCompleta.. %d\n", configuracion.pantallaCompleta);
-	printf("  tamanyoTile....... %d pixels\n", configuracion.tamanyoTile);
-	printf("  anchoTilemaps..... %d tiles\n", configuracion.anchoTilemaps);
-	printf("  altoTilemaps...... %d tiles\n", configuracion.altoTilemaps);
-	printf("  numTilemaps....... %d\n", configuracion.numTilemaps);
-	printf("  numSprites........ %d\n", configuracion.numSprites);
-	printf("  numDecorados...... %d\n", configuracion.numDecorados);
-	printf("  numMusicas........ %d\n", configuracion.numMusicas);
+	printf("  anchoPantalla......... %d pixels\n", configuracion.anchoPantalla);
+	printf("  altoPantalla.......... %d pixels\n", configuracion.altoPantalla);
+	printf("  pantallaCompleta...... %d\n", configuracion.pantallaCompleta);
+	printf("  longitudLineaEntrada.. %d\n", configuracion.longitudLineaEntrada);
+	printf("  tamanyoTile........... %d pixels\n", configuracion.tamanyoTile);
+	printf("  anchoTilemaps......... %d tiles\n", configuracion.anchoTilemaps);
+	printf("  altoTilemaps.......... %d tiles\n", configuracion.altoTilemaps);
+	printf("  numTilemaps........... %d\n", configuracion.numTilemaps);
+	printf("  numSprites............ %d\n", configuracion.numSprites);
+	printf("  numDecorados.......... %d\n", configuracion.numDecorados);
+	printf("  numFuentes............ %d\n", configuracion.numFuentes);
+	printf("  numMusicas............ %d\n", configuracion.numMusicas);
 	printf("\n");
 
 	// Iniciar pantalla
@@ -206,9 +457,9 @@ bool NOE_Inicia()
 						 (unsigned int)(c.bpp) };
 
 
-	char titulo[MAX_CADENA];
+	char titulo[NOE_UI_MAXCADENA];
 
-	sprintf(titulo, "%s Version %s", NOMBRE_LIBRERIA, VERSION);
+	sprintf(titulo, "%s Version %s", NOE_NOMBRE, NOE_VERSION);
 
 	int style = sfTitlebar;
 	if(configuracion.pantallaCompleta) { style |= sfFullscreen; }
@@ -219,22 +470,39 @@ bool NOE_Inicia()
 	colorLimpiar = sfColor_fromRGB(0, 0, 0);
 
 	
-	char ruta[MAX_RUTA];
-	sprintf(ruta, "%s%s", RUTA_RECURSOS, "icono.png");
+	char ruta[NOE_RECURSOS_MAXRUTA];
+	sprintf(ruta, "%s%s", NOE_RECURSOS_RUTA_RECURSOS, "icono.png");
 	
 	icono = sfImage_createFromFile(ruta);
 	
 	sfRenderWindow_setIcon(ventana, sfImage_getSize(icono).y, sfImage_getSize(icono).y, sfImage_getPixelsPtr(icono));
 	
+	// Iniciar teclado
+	
+	for(int i = 0; i < NOE_TECLADO_NUMTECLAS; i ++)
+	{
+		tecladoTeclasPulsadas[i] = false;
+		tecladoTeclasPulsadasAnteriores[i] = sfKeyboard_isKeyPressed(tecladoCodigosSFTecla[i]);
+	}
+	
+	// Iniciar entrada
+	
+	entradaBuffer = new char[c.longitudLineaEntrada + 1];
+	
+	entradaBuffer[0] = '\0';
+	entradaBufferOcupadas = 0;
+	
 	// Cargar recursos
 	
+	// Iniciar tilemaps
+
 	tiposTile = new sfSprite*[c.numTiposTile];
 	
 	for(int i = 0; i < c.numTiposTile; i ++)
 	{
 		sfTexture* texture;
 		
-		sprintf(ruta, "%s%s%03d.png", RUTA_RECURSOS, RUTA_TIPOS_TILE, i);
+		sprintf(ruta, "%s%s%03d.png", NOE_RECURSOS_RUTA_RECURSOS, NOE_RECURSOS_RUTA_TIPOS_TILE, i);
 		texture = sfTexture_createFromFile(ruta, NULL);
 
 		tiposTile[i] = sfSprite_create();
@@ -242,13 +510,15 @@ bool NOE_Inicia()
 		
 	}
 	
+	// Iniciar sprites
+
 	sprites = new sfSprite*[c.numSprites];
 	
 	for(int i = 0; i < c.numSprites; i ++)
 	{
 		sfTexture* texture;
 		
-		sprintf(ruta, "%s%s%03d.png", RUTA_RECURSOS, RUTA_SPRITES, i);
+		sprintf(ruta, "%s%s%03d.png", NOE_RECURSOS_RUTA_RECURSOS, NOE_RECURSOS_RUTA_SPRITES, i);
 		texture = sfTexture_createFromFile(ruta, NULL);
 
 		sprites[i] = sfSprite_create();
@@ -258,11 +528,13 @@ bool NOE_Inicia()
 	
 	decorados = new sfSprite*[c.numDecorados];
 	
+	// Iniciar decorados
+
 	for(int i = 0; i < c.numDecorados; i ++)
 	{
 		sfTexture* texture;
 		
-		sprintf(ruta, "%s%s%02d.png", RUTA_RECURSOS, RUTA_DECORADOS, i);
+		sprintf(ruta, "%s%s%02d.png", NOE_RECURSOS_RUTA_RECURSOS, NOE_RECURSOS_RUTA_DECORADOS, i);
 		texture = sfTexture_createFromFile(ruta, NULL);
 
 		decorados[i] = sfSprite_create();
@@ -270,11 +542,35 @@ bool NOE_Inicia()
 		
 	}
 	
+	// Iniciar fuentes
+	
+	fuentes	= new sfSprite**[c.numFuentes];
+	
+	int numGlifos = sizeof(fuenteCaracteresGlifo) / sizeof(char);
+	
+	for(int i = 0; i < c.numFuentes; i ++)
+	{
+		fuentes[i] = new sfSprite*[fuenteNumGlifos];
+		
+		for(int j = 0; j < fuenteNumGlifos; j ++)
+		{
+			sfTexture* texture;
+
+			sprintf(ruta, "%s%s%02d/%02d.png", NOE_RECURSOS_RUTA_RECURSOS, NOE_RECURSOS_RUTA_FUENTES, i, j);
+			texture = sfTexture_createFromFile(ruta, NULL);
+
+			fuentes[i][j] = sfSprite_create();
+			sfSprite_setTexture(fuentes[i][j], texture, sfTrue);
+		}
+	}
+	
+	// Iniciar musicas
+	
 	musicas = new sfMusic*[c.numMusicas];
 	
 	for(int i = 0; i < c.numMusicas; i ++)
 	{
-		sprintf(ruta, "%s%s%02d.wav", RUTA_RECURSOS, RUTA_MUSICAS, i);
+		sprintf(ruta, "%s%s%02d.wav", NOE_RECURSOS_RUTA_RECURSOS, NOE_RECURSOS_RUTA_MUSICAS, i);
 		musicas[i] = sfMusic_createFromFile(ruta);
 		
 	}	
@@ -329,6 +625,8 @@ bool NOE_Inicia()
 
 void NOE_Actualiza()
 {
+	Configuracion &c = configuracion;
+	
 	// Procesar eventos de ventana
 	
 	sfEvent event;
@@ -338,6 +636,39 @@ void NOE_Actualiza()
 		/* Close ventana : exit */
 		//if (event.type == sfEvtClosed)
 		//	sfRenderWindow_close(ventana);
+	}
+	
+	// Actualizar teclado
+	
+	for(int i = 0; i < NOE_TECLADO_NUMTECLAS; i ++)
+	{
+		tecladoTeclasPulsadasAnteriores[i] = tecladoTeclasPulsadas[i];
+		tecladoTeclasPulsadas[i] = sfKeyboard_isKeyPressed(tecladoCodigosSFTecla[i]);
+		
+	}
+	
+	// Actualizar entrada
+	
+	for(int i = NOE_ENTRADA_PRIMERA_TECLA; i <= NOE_ENTRADA_ULTIMA_TECLA; i ++)
+	{
+		if(tecladoTeclasPulsadas[i] && !tecladoTeclasPulsadasAnteriores[i])
+		{
+			if(entradaBufferOcupadas < c.longitudLineaEntrada)
+			{
+				entradaBuffer[entradaBufferOcupadas] =  entradaCaracteresTecla[i];
+				entradaBuffer[entradaBufferOcupadas + 1] = '\0';
+				entradaBufferOcupadas ++;
+			}
+		}
+	}
+	
+	if(tecladoTeclasPulsadas[NOE_TECLA_BORRA_ATRAS] && !tecladoTeclasPulsadasAnteriores[NOE_TECLA_BORRA_ATRAS])
+	{
+		if(entradaBufferOcupadas > 0)
+		{
+			entradaBufferOcupadas --;
+			entradaBuffer[entradaBufferOcupadas] = '\0';			
+		}
 	}
 	
 	// Actualizar reloj
@@ -362,6 +693,11 @@ void NOE_Actualiza()
 void NOE_Finaliza()
 {
 	Configuracion &c = configuracion;
+	
+	// Liberar entrada
+	
+	delete entradaBuffer;
+	entradaBuffer = NULL;
 
 	// Liberar recursos
 
@@ -395,45 +731,20 @@ int NOE_ObtenNumeroAleatorio(int minimo, int maximo)
 	return minimo + rand() % (maximo - minimo + 1);
 }
 
-sfKeyCode codigosTecla[] = 
-{
-	sfKeyA,
-	sfKeyB,
-	sfKeyC,
-	sfKeyD,
-	sfKeyE,
-	sfKeyF,
-	sfKeyG,
-	sfKeyH,
-	sfKeyI,
-	sfKeyJ,
-	sfKeyK,
-	sfKeyL,
-	sfKeyM,
-	sfKeyN,
-	sfKeyO,
-	sfKeyP,
-	sfKeyQ,
-	sfKeyR,
-	sfKeyS,
-	sfKeyT,
-	sfKeyU,
-	sfKeyV,
-	sfKeyW,
-	sfKeyX,
-	sfKeyY,
-	sfKeyZ,
-	sfKeySpace,
-	sfKeyEscape,
-    sfKeyLeft, 
-    sfKeyRight,
-    sfKeyUp,   
-    sfKeyDown, 
-};
 
 bool NOE_ObtenTeclaPulsada(NOE_Tecla tecla)
 {
-	return sfKeyboard_isKeyPressed(codigosTecla[tecla]);
+	return tecladoTeclasPulsadas[tecla];
+}
+
+bool NOE_ObtenTeclaAbajo(NOE_Tecla tecla)
+{	
+	return tecladoTeclasPulsadas[tecla] && !tecladoTeclasPulsadasAnteriores[tecla];
+}
+
+bool NOE_ObtenTeclaArriba(NOE_Tecla tecla)
+{
+	return !tecladoTeclasPulsadas[tecla] && tecladoTeclasPulsadasAnteriores[tecla];
 }
 
 int NOE_ConviertePantallaAMundoX(int x)
@@ -551,6 +862,53 @@ void NOE_DibujaDecorado(int decorado)
 	
 }
 
+void NOE_DibujaCaracter(char caracter, int x, int y, int ancho, int alto, int font)
+{
+	int glifo = 0;
+	bool found = false;
+	
+	int i = 0;
+	while(!found && i < fuenteNumGlifos)
+	{
+		if(fuenteCaracteresGlifo[i] == caracter)
+		{	
+			glifo = i;
+			found = true;
+			
+		}
+		else
+		{	
+			i ++;
+		}			
+		
+	}
+	
+	sfSprite* sprite2 = fuentes[font][glifo];
+	
+	const sfTexture* textura = sfSprite_getTexture(sprite2);
+	sfVector2u tamanyo = sfTexture_getSize(textura);
+
+	sfVector2f escala = { (float)ancho / tamanyo.x, (float)alto / tamanyo.y  };
+	sfSprite_setScale(sprite2, escala);
+
+	sfVector2f position = { (float)x, (float)y };
+	sfSprite_setPosition(sprite2, position);
+
+	sfRenderWindow_drawSprite(ventana, sprite2, NULL);
+	
+}
+
+void NOE_DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int altoCaracter, int font)
+{
+	//printf(texto);
+	int i = 0;
+	while(texto[i] != '\0')
+	{
+		NOE_DibujaCaracter(texto[i], x + i * anchoCaracter, y, anchoCaracter, altoCaracter, font);
+		
+		i ++;
+	}
+}
 
 void NOE_ReproduceMusica(int musica)
 {
@@ -637,10 +995,6 @@ void NOE_LimpiaPantalla(int r, int g, int b)
    sfRenderWindow_clear(ventana, color);
 }
 
-void NOE_DibujaFondo(int fondo)
-{
-}
-
 void NOE_DibujaTilemap(int indice)
 {
 	Configuracion &c = configuracion;
@@ -673,5 +1027,16 @@ void NOE_DibujaTilemap(int indice)
 void NOE_MuestraPantalla()
 {
 	sfRenderWindow_display(ventana);	
+}
+
+const char *NOE_ObtenEntrada()
+{
+	return entradaBuffer;
+}
+
+void NOE_LimpiaEntrada()
+{
+	entradaBufferOcupadas = 0;
+	entradaBuffer[0] = '\0';
 }
 
