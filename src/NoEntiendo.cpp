@@ -15,6 +15,7 @@
 #define NOE_RECURSOS_RUTA_RECURSOS "Recursos/"
 #define NOE_RECURSOS_RUTA_TIPOS_TILE "Tiles/"
 #define NOE_RECURSOS_RUTA_MUSICAS "Musicas/"
+#define NOE_RECURSOS_RUTA_SONIDOS "Sonidos/"
 #define NOE_RECURSOS_RUTA_SPRITES "Sprites/"
 #define NOE_RECURSOS_RUTA_DECORADOS "Decorados/"
 #define NOE_RECURSOS_RUTA_FUENTES "Fuentes/"
@@ -40,6 +41,8 @@ struct Configuracion
 	int numDecorados = 8;
 	int numFuentes = 2;
 	int numMusicas = 8;
+	int numSonidos = 32;
+	int numCanales = 16;
 	int tiempoMinimoActualizacion = 10;
 	int longitudLineaEntrada = 100;
 };
@@ -297,6 +300,9 @@ int fuenteNumGlifos = 37;
 char *entradaBuffer;
 int entradaBufferOcupadas;
 
+sfSoundBuffer **buffersSonido;
+sfSound **canalesSonido;
+
 
 Configuracion configuracion;
 
@@ -446,6 +452,8 @@ bool NOE_Inicia()
 	printf("  numDecorados.......... %d\n", configuracion.numDecorados);
 	printf("  numFuentes............ %d\n", configuracion.numFuentes);
 	printf("  numMusicas............ %d\n", configuracion.numMusicas);
+	printf("  numSonidos............ %d\n", configuracion.numSonidos);
+	printf("  numCanales............ %d\n", configuracion.numCanales);
 	printf("\n");
 
 	// Iniciar pantalla
@@ -575,6 +583,27 @@ bool NOE_Inicia()
 		
 	}	
 		
+	// Iniciar sonidos
+	
+	buffersSonido = new sfSoundBuffer*[c.numSonidos];
+	
+	for(int i = 0; i < c.numSonidos; i ++)
+	{
+		sprintf(ruta, "%s%s%03d.wav", NOE_RECURSOS_RUTA_RECURSOS, NOE_RECURSOS_RUTA_SONIDOS, i);
+		buffersSonido[i] = sfSoundBuffer_createFromFile(ruta);
+		
+	}
+
+	canalesSonido = new sfSound*[c.numCanales];
+
+	for(int i = 0; i < c.numCanales; i ++)
+	{
+		canalesSonido[i] = sfSound_create();
+		sfSound_setLoop(canalesSonido[i], sfFalse);
+		
+	}
+	
+
 	// Iniciar tilemaps
 	
 	tilemaps = new int**[c.numTilemaps];
@@ -703,6 +732,12 @@ void NOE_Finaliza()
 
 	for(int i = 0; i < c.numMusicas; i ++) { sfMusic_destroy(musicas[i]); }
 	delete musicas;
+
+	for(int i = 0; i < c.numCanales; i ++) { sfSound_destroy(canalesSonido[i]); }
+	delete canalesSonido;
+	
+	for(int i = 0; i < c.numSonidos; i ++) { sfSoundBuffer_destroy(buffersSonido[i]); }
+	delete buffersSonido;
 
 	// Liberar timer
 
@@ -910,11 +945,14 @@ void NOE_DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int al
 	}
 }
 
-void NOE_ReproduceMusica(int musica)
+void NOE_ReproduceMusica(int musica, int volumen, int pitch)
 {
 	Configuracion &c = configuracion;		
 	for(int i = 0; i < c.numMusicas; i ++) { sfMusic_stop(musicas[i]); }
 	sfMusic_setLoop(musicas[musica], true);
+	sfMusic_setVolume(musicas[musica], volumen);
+	sfMusic_setPitch(musicas[musica], (float)pitch / 100);
+	
 	sfMusic_play(musicas[musica]);
 }
 
@@ -1039,4 +1077,41 @@ void NOE_LimpiaEntrada()
 	entradaBufferOcupadas = 0;
 	entradaBuffer[0] = '\0';
 }
+
+int NOE_ReproduceSonido(int sonido, int volumen, int pitch)
+{
+	Configuracion &c = configuracion;
+
+	bool encontrado = false;
+	int canal = -1;
+	int i = 0;
+	
+	while(i < c.numCanales && !encontrado)
+	{
+		if(sfSound_getStatus(canalesSonido[i]) != sfSoundStatus::sfPlaying)
+		{
+			encontrado = true;
+			canal = i;
+		}
+		
+		i ++;
+	}
+	
+	if(encontrado)
+	{
+		sfSound_setBuffer(canalesSonido[canal], buffersSonido[sonido]);
+		sfSound_setVolume(canalesSonido[canal], volumen);
+		sfSound_setPitch(canalesSonido[canal], (float)pitch / 100);
+		sfSound_play(canalesSonido[canal]);
+	}
+	
+	return canal;
+	
+}
+
+void NOE_ParaSonido(int canal)
+{
+	if(canal >= 0) { sfSound_stop(canalesSonido[canal]); }
+}
+
 

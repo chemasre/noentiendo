@@ -143,8 +143,13 @@ bool NOE_ObtenBotonRaton();
 
 // Audio
 
-void NOE_ReproduceMusica(int musica);
+void NOE_ReproduceMusica(int musica, int volumen, int pitch);
 void NOE_ParaMusica();
+
+int NOE_ReproduceSonido(int sonido, int volumen, int pitch);
+void NOE_ParaSonido(int canal);
+
+
 
 
 #endif

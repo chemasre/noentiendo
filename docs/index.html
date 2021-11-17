@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>NoEntiendo: Una consola virtual</title>
+<title>NoEntiendo: Una entorno nativo para desarrollar videojuegos</title>
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link href="style.css" rel="stylesheet">
@@ -12,114 +12,145 @@
 <h2>Bucle de juego</h2>
 <h3>bool NOE_Inicia()</h3>
 <div class="definition">
-<p>Inicia el entorno NoEntiendo.</p>
-<p>Esta función debe llamarse una única vez al principio del programa</p>
+<p>Inicia el entorno NoEntiendo, cargando los recursos necesarios e inicializando la pantalla y el resto de dispositivos según la configuración presente en el fichero configuracion.txt.
+Devuelve cierto si el entorno se ha podido iniciar correctamente y falso en caso de error. Debe llamarse una única vez al principio del programa.</p>
 </div>
 <h3>void NOE_Actualiza()</h3>
 <div class="definition">
-<p>Actualiza el entorno NoEntiendo.</p>
-<p>Debe llamarse periódicamente durante la ejecución del programa</p>
+<p>Actualiza el entorno NoEntiendo, actualizando el valor del temporizador y el estado del teclado. Debe llamarse periódicamente durante la ejecución del programa.</p>
 </div>
 <h3>void NOE_Finaliza()</h3>
 <div class="definition">
-<p>Finaliza el entorno NoEntiendo.</p>
+<p>Finaliza el entorno NoEntiendo, liberando los recursos reservados previamente.</p>
 <p>Debe llamarse una vez al final del programa</p>
 </div>
 <h2>Pantalla</h2>
 <h3>void NOE_LimpiaPantalla(int r, int g, int b)</h3>
 <div class="definition">
-<p>Limpia el buffer de la pantalla con el color definido por las componentes r,g y b</p>
+<p>Limpia el buffer de la pantalla con el color definido por los componentes r,g y b</p>
 </div>
 <h3>void NOE_MuestraPantalla()</h3>
 <div class="definition">
 <p>Muestra contenido del buffer de pantalla</p>
 </div>
-<h2>Camara</h2>
+<h2>Entrada</h2>
+<h3>const char *NOE_ObtenEntrada()</h3>
+<div class="definition">
+<p>Devuelve la cadena de texto presente en el buffer de entrada</p>
+</div>
+<h3>void NOE_LimpiaEntrada();</h3>
+<div class="definition">
+<p>Vacía el buffer de entrada</p>
+</div>
+<h2>Cámara</h2>
 <h3>int NOE_ObtenPosicionCamaraX()</h3>
 <div class="definition">
-<p>Devuelve la posición X de la cámara</p>
+<p>Devuelve la posición x de la cámara en el mundo</p>
 </div>
 <h3>int NOE_ObtenPosicionCamaraY()</h3>
 <div class="definition">
-<p>Devuelve la posición Y de la cámara</p>
+<p>Devuelve la posición y de la cámara en el mundo</p>
 </div>
 <h3>void NOE_PonPosicionCamara(int x, int y)</h3>
 <div class="definition">
-<p>Coloca la cámara en las coordenadas (x,y)</p>
+<p>Coloca la cámara en las coordenadas de mundo x y</p>
 </div>
 <h2>Tilemaps</h2>
 <h3>int NOE_ObtenTile(int tilemap, int posicionX, int posicionY)</h3>
 <div class="definition">
-<p>Devuelve el tipo de tile presente en las coordenadas (x,y) del tilemap</p>
+<p>Devuelve el tipo de tile presente en las coordenadas de tilemap x y</p>
 </div>
 <h3>void NOE_PonTile(int tilemap, int posicionX, int posicionY, int tile)</h3>
 <div class="definition">
-<p>Pone el tipo de tile en las coordenadas (x,y) del tilemap</p>
+<p>Pone el tipo de tile indicado en las coordenadas de tilemap x y</p>
 </div>
 <h3>void NOE_LimpiaTilemap(int tilemap, int tile)</h3>
 <div class="definition">
-<p>Limpia el tilemap poniendo en todas sus posiciones el tipo de tile</p>
+<p>Limpia el tilemap poniendo en todas sus posiciones el tipo de tile indicado</p>
 </div>
 <h3>void NOE_DibujaTilemap(int numTilemap)</h3>
 <div class="definition">
-<p>Dibuja el tilemap indicado en el buffer de pantalla</p>
+<p>Dibuja en el buffer de pantalla el tilemap indicado en las coordenadas de mundo 0 0 </p>
 </div>
 <h2>Sprites</h2>
 <h3>void NOE_DibujaSprite(int sprite, int x, int y, int ancho, int alto, bool invertirX, bool invertirY)</h3>
 <div class="definition">
-<p>Dibuja en el buffer de pantalla el sprite indicado por las coordenadas (x, y), dibujándolo con el tamaño que se indique e invirtiéndolo si así se especifica</p>
+<p>Dibuja en el buffer de pantalla el sprite en las coordenadas de mundo x y con el tamaño e inversiones opcionales indicadas</p>
+</div>
+<h2>Decorados</h2>
+<h3>void NOE_DibujaDecorado(int decorado)</h3>
+<div class="definition">
+<p>Dibuja en el buffer de pantalla el decorado indicado, que dibujará en las coordenadas de pantalla 0 0 y se escalará hasta cubrirla por completo</p>
+</div>
+<h2>Texto</h2>
+<h3>void NOE_DibujaCaracter(char caracter, int x, int y, int ancho, int alto, int font);
+</h3>
+<div class="definition">
+<p>Dibuja en el buffer de pantalla un único carácter situándolo enlas coordenadas de pantalla x e y usando el tamaño y la fuente especificadas.</p>
+</div>
+<h3>void NOE_DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int altoCaracter, int font)</h3>
+<div class="definition">
+<p>Dibuja en el buffer de pantalla el texto, comenzando por las coordenadas de pantalla x e y usando el tamaño de carácter y la fuente especificadas.</p>
 </div>
 <h2>Gestión del tiempo</h2>
 <h3>void NOE_Espera(int tiempo)</h3>
 <div class="definition">
-<p>Bloquea la ejecución durante el tiempo en milisegundos indicado</p>
+<p>Pone el programa en espera durante el tiempo en milisegundos indicado</p>
 </div>
 <h3>int NOE_ObtenTiempoDesdeActualizacion()</h3>
 <div class="definition">
-<p>Devuelve el tiempo en milisegundos transcurrido desde la última actualización</p>
+<p>Devuelve el tiempo en milisegundos transcurrido desde la llamada a NOE_Inicia() o la última llamada a NOE_Actualiza()</p>
 </div>
 <h2>Aleatoriedad</h2>
 <h3>int NOE_ObtenNumeroAleatorio(int minimo, int maximo)</h3>
 <div class="definition">
 <p>Devuelve un número aleatorio entre el valor mínimo y el máximo indicados, ambos incluidos</p>
 </div>
-<h2>Coordenadas</h2>
+<h2>Cambios de coordenadas</h2>
 <h3>int NOE_ConviertePantallaAMundoX(int x)</h3>
 <div class="definition">
-<p>Convierte la coordenada x del sistema de pantalla al sistema mundo</p>
+<p>Convierte la coordenada x indicada del sistema de pantalla al sistema mundo</p>
 </div>
 <h3>int NOE_ConviertePantallaAMundoY(int y)</h3>
 <div class="definition">
-<p>Convierte la coordenada y del sistema de pantalla al sistema mundo</p>
+<p>Convierte la coordenada y indicada del sistema de pantalla al sistema mundo</p>
 </div>
 <h3>int NOE_ConvierteMundoAPantallaX(int x)</h3>
 <div class="definition">
-<p>Convierte la coordenada x del sistema mundo al sistema de pantalla</p>
+<p>Convierte la coordenada x indicada del sistema mundo al sistema de pantalla</p>
 </div>
 <h3>int NOE_ConvierteMundoAPantallaY(int y)</h3>
 <div class="definition">
-<p>Convierte la coordenada y del sistema mundo al sistema de pantalla</p>
+<p>Convierte la coordenada y indicada del sistema mundo al sistema de pantalla</p>
 </div>
 <h3>int NOE_ConvierteMundoATileX(int x)</h3>
 <div class="definition">
-<p>Convierte la coordenada x del sistema mundo al sistema de los tilemaps</p>
+<p>Convierte la coordenada x indicada del sistema mundo al sistema de los tilemaps</p>
 </div>
 <h3>int NOE_ConvierteMundoATileY(int y)</h3>
 <div class="definition">
-<p>Convierte la coordenada y del sistema mundo al sistema de los tilemaps</p>
+<p>Convierte la coordenada y indicada del sistema mundo al sistema de los tilemaps</p>
 </div>
 <h3>int NOE_ConvierteTileAMundoX(int x)</h3>
 <div class="definition">
-<p>Convierte la coordenada x del sistema de los tilemaps al sistema mundo</p>
+<p>Convierte la coordenada x indicada del sistema de los tilemaps al sistema mundo</p>
 </div>
 <h3>int NOE_ConvierteTileAMundoY(int y)</h3>
 <div class="definition">
-<p>Convierte la coordenada y del sistema de los tilemaps al sistema mundo</p>
+<p>Convierte la coordenada y indicada del sistema de los tilemaps al sistema mundo</p>
 </div>
 <h2>Entrada</h2>
 <h3>bool NOE_ObtenTeclaPulsada(NOE_Tecla tecla)</h3>
 <div class="definition">
 <p>Devuelve cierto si la tecla indicada está pulsada</p>
+</div>
+<h3>bool NOE_ObtenTeclaAbajo(NOE_Tecla tecla)</h3>
+<div class="definition">
+<p>Devuelve cierto si la tecla ha pasado a estar pulsada en la última llamada a NOE_Actualiza()</p>
+</div>
+<h3>bool NOE_ObtenTeclaArriba(NOE_Tecla tecla)</h3>
+<div class="definition">
+<p>Devuelve cierto si la tecla dejado de estar pulsada en la última llamada a NOE_Actualiza()</p>
 </div>
 <h3>int  NOE_ObtenPosicionRatonX()</h3>
 <div class="definition">
@@ -134,14 +165,20 @@
 <p>Devuelve cierto si el botón del ratón está pulsado y falso si no</p>
 </div>
 <h2>Audio</h2>
-<h3>void NOE_ReproduceMusica(int musica)</h3>
+<h3>void NOE_ReproduceMusica(int musica, int volumen, int pitch)</h3>
 <div class="definition">
-<p>Reproduce la música indicada</p>
+<p>Reproduce la música con el volumen y el pitch indicados. Si había otra música reproduciéndose, la detiene.</p>
 </div>
 <h3>void NOE_ParaMusica()</h3>
 <div class="definition">
 <p>Para la música en reproducción</p>
 </div>
+<h3>int NOE_ReproduceSonido(int sonido, int volumen, int pitch)</h3>
+<div class="definition">
+<p>Busca un canal libre y si lo encuentra reproduce el sonido en él, con el volumen y el pitch indicados y retorna el índice del canal. Si no lo encuentra, devuelve -1</p>
+</div>
+<h3>void NOE_ParaSonido(int canal)</h3>
+<p>Si el canal está reproduciendo un sonido, lo detiene. Si no, no tiene efecto. Se puede pasar como canal -1 y en ese caso no tiene efecto</p>
 <h1>Licencia</h1>
 <pre>
 +----------------------------------------------------------------------+

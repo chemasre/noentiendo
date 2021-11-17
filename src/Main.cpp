@@ -31,7 +31,7 @@ int main()
 	printf("ESCAPE ........ Salir \n");
 	
 	
-	NOE_ReproduceMusica(musica);
+	//NOE_ReproduceMusica(musica);
 
 
 	while(!NOE_ObtenTeclaPulsada(NOE_TECLA_ESCAPE))
@@ -74,14 +74,30 @@ int main()
 		
 		if(NOE_ObtenTeclaPulsada(NOE_TECLA_ENTRAR))
 		{
-			if(musica == 0) { NOE_ReproduceMusica(3); musica = 3; }
-			else { NOE_ReproduceMusica(0); musica = 0; }
+			if(musica == 0) { NOE_ReproduceMusica(3, 100, 200); musica = 3; }
+			else { NOE_ReproduceMusica(0, 50, 50); musica = 0; }
 			
 			NOE_LimpiaEntrada();
 			
 		}		
 		
+		if(NOE_ObtenTeclaAbajo(NOE_TECLA_N))
+		{
+			int canal = NOE_ReproduceSonido(0, 50, 100);
+			
+			//printf("Reproduciendo sonido 0 en canal %d\n", canal);
+			
+			//printf("Detectada N\n");
+		}		
 		
+		if(NOE_ObtenTeclaAbajo(NOE_TECLA_M))
+		{
+			int canal = NOE_ReproduceSonido(1, 100, 50);
+			
+			//printf("Reproduciendo sonido 1 en canal %d\n", canal);
+			//printf("Detectada M\n");
+		}		
+
 		NOE_PonTile(0, 5, 5, 7);
 		
 		temporizador = temporizador + NOE_ObtenTiempoDesdeActualizacion();
