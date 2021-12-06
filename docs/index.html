@@ -46,14 +46,15 @@
 <div class="function"><a href="#00-05-11">NOE_DibujaTexto</a></div>
 <div class="function"><a href="#00-05-12">NOE_DibujaDisco</a></div>
 <div class="function"><a href="#00-05-13">NOE_DibujaCaja</a></div>
-<div class="function"><a href="#00-05-14">NOE_ConviertePantallaAMundoX</a></div>
-<div class="function"><a href="#00-05-15">NOE_ConviertePantallaAMundoY</a></div>
-<div class="function"><a href="#00-05-16">NOE_ConvierteMundoAPantallaX</a></div>
-<div class="function"><a href="#00-05-17">NOE_ConvierteMundoAPantallaY</a></div>
-<div class="function"><a href="#00-05-18">NOE_ConvierteMundoATileX</a></div>
-<div class="function"><a href="#00-05-19">NOE_ConvierteMundoATileY</a></div>
-<div class="function"><a href="#00-05-20">NOE_ConvierteTileAMundoX</a></div>
-<div class="function"><a href="#00-05-21">NOE_ConvierteTileAMundoY</a></div>
+<div class="function"><a href="#00-05-14">NOE_DibujaForma</a></div>
+<div class="function"><a href="#00-05-15">NOE_ConviertePantallaAMundoX</a></div>
+<div class="function"><a href="#00-05-16">NOE_ConviertePantallaAMundoY</a></div>
+<div class="function"><a href="#00-05-17">NOE_ConvierteMundoAPantallaX</a></div>
+<div class="function"><a href="#00-05-18">NOE_ConvierteMundoAPantallaY</a></div>
+<div class="function"><a href="#00-05-19">NOE_ConvierteMundoATileX</a></div>
+<div class="function"><a href="#00-05-20">NOE_ConvierteMundoATileY</a></div>
+<div class="function"><a href="#00-05-21">NOE_ConvierteTileAMundoX</a></div>
+<div class="function"><a href="#00-05-22">NOE_ConvierteTileAMundoY</a></div>
 <h2><a href="#00-06-00">Sistema</a></h2>
 <div class="function"><a href="#00-06-01">NOE_Espera</a></div>
 <div class="function"><a href="#00-06-02">NOE_ObtenTiempoDesdeActualizacion</a></div>
@@ -92,7 +93,7 @@
 <div class="tagline">Una librería pedagógica para la programación de videojuegos 2D basada en SFML</div>
 </div>
 <div class="body">
-<h1 id="00-00"><div>Referencia</div><div class="version">Versión 1.21</div></h1>
+<h1 id="00-00"><div>Referencia</div><div class="version">Versión 1.22</div></h1>
 <h2 id="00-00-00">Constantes</h2>
 <div id="00-00-01" class="function">int noe_tileVacio</div>
 <div class="definition">
@@ -336,11 +337,24 @@
 <p class="param">y: Posición Y de la caja, en el sistema de coordenadas del mundo.</p>
 <p class="param">ancho: Ancho de la caja en el sistema del mundo.</p>
 <p class="param">alto: Alto de la caja en el sistema del mundo.</p>
-<p class="param">r: Componente roja del color con que se dibujará el disco.</p>
-<p class="param">g: Componente verde del color con que se dibujará el disco.</p>
-<p class="param">b: Componente azul del color con que se dibujará el disco.</p>
+<p class="param">r: Componente roja del color con que se dibujará la forma.</p>
+<p class="param">g: Componente verde del color con que se dibujará la forma.</p>
+<p class="param">b: Componente azul del color con que se dibujará la forma.</p>
 </div>
-<div  id="00-05-14" class="function">int NOE_ConviertePantallaAMundoX(int x)</div>
+<div  id="00-05-14" class="function">void NOE_DibujaForma(int forma, int x, int y, int ancho, int alto, int r, int g, int b)</div>
+<div class="definition">
+<p>Dibuja una forma convexa en el buffer de pantalla</p>
+<p class="params">Parámetros:</p>
+<p class="param">forma: Índice de la forma que se dibujará.</p>
+<p class="param">x: Posición X de la esquina superior izquierda de la caja contenedora de la forma, en el sistema de coordenadas del mundo.</p>
+<p class="param">y: Posición Y de la esquina superior izquierda de la caja contenedora de la forma, en el sistema de coordenadas del mundo.</p>
+<p class="param">ancho: Ancho de la caja contenedora de la forma en el sistema del mundo.</p>
+<p class="param">alto: Alto de la caja contenedora de la forma en el sistema del mundo..</p>
+<p class="param">r: Componente roja del color con que se dibujará la forma.</p>
+<p class="param">g: Componente verde del color con que se dibujará la forma.</p>
+<p class="param">b: Componente azul del color con que se dibujará la forma.</p>
+</div>
+<div  id="00-05-15" class="function">int NOE_ConviertePantallaAMundoX(int x)</div>
 <div class="definition">
 <p>Convierte una coordenada X en sistema de pantalla al sistema mundo</p>
 <p class="params">Parámetros:</p>
@@ -348,7 +362,7 @@
 <p class="returns">Devuelve:</p>
 <p class="return">Coordenada X en sistema mundo.</p>
 </div>
-<div  id="00-05-15" class="function">int NOE_ConviertePantallaAMundoY(int y)</div>
+<div  id="00-05-16" class="function">int NOE_ConviertePantallaAMundoY(int y)</div>
 <div class="definition">
 <p>Convierte una coordenada Y en sistema de pantalla al sistema mundo</p>
 <p class="params">Parámetros:</p>
@@ -356,7 +370,7 @@
 <p class="returns">Devuelve:</p>
 <p class="return">Coordenada Y en sistema mundo.</p>
 </div>
-<div  id="00-05-16" class="function">int NOE_ConvierteMundoAPantallaX(int x)</div>
+<div  id="00-05-17" class="function">int NOE_ConvierteMundoAPantallaX(int x)</div>
 <div class="definition">
 <p>Convierte una coordenada X en sistema de mundo al sistema de pantalla</p>
 <p class="params">Parámetros:</p>
@@ -364,7 +378,7 @@
 <p class="returns">Devuelve:</p>
 <p class="return">Coordenada X en sistema de pantalla.</p>
 </div>
-<div  id="00-05-17" class="function">int NOE_ConvierteMundoAPantallaY(int y)</div>
+<div  id="00-05-18" class="function">int NOE_ConvierteMundoAPantallaY(int y)</div>
 <div class="definition">
 <p>Convierte una coordenada Y en sistema de mundo al sistema de pantalla</p>
 <p class="params">Parámetros:</p>
@@ -372,7 +386,7 @@
 <p class="returns">Devuelve:</p>
 <p class="return">Coordenada Y en sistema de pantalla.</p>
 </div>
-<div  id="00-05-18" class="function">int NOE_ConvierteMundoATileX(int x)</div>
+<div  id="00-05-19" class="function">int NOE_ConvierteMundoATileX(int x)</div>
 <div class="definition">
 <p>Convierte una coordenada X en sistema de mundo al sistema del tilemap</p>
 <p class="params">Parámetros:</p>
@@ -380,7 +394,7 @@
 <p class="returns">Devuelve:</p>
 <p class="return">Coordenada X en sistema de tilemap.</p>
 </div>
-<div  id="00-05-19" class="function">int NOE_ConvierteMundoATileY(int y)</div>
+<div  id="00-05-20" class="function">int NOE_ConvierteMundoATileY(int y)</div>
 <div class="definition">
 <p>Convierte una coordenada Y en sistema de mundo al sistema del tilemap</p>
 <p class="params">Parámetros:</p>
@@ -388,7 +402,7 @@
 <p class="returns">Devuelve:</p>
 <p class="return">Coordenada Y en sistema de tilemap.</p>
 </div>
-<div  id="00-05-20" class="function">int NOE_ConvierteTileAMundoX(int x)</div>
+<div  id="00-05-21" class="function">int NOE_ConvierteTileAMundoX(int x)</div>
 <div class="definition">
 <p>Convierte una coordenada X en sistema de tilemap al sistema de mundo</p>
 <p class="params">Parámetros:</p>
@@ -396,7 +410,7 @@
 <p class="returns">Devuelve:</p>
 <p class="return">Coordenada X en sistema de mundo.</p>
 </div>
-<div  id="00-05-21" class="function">int NOE_ConvierteTileAMundoY(int y)</div>
+<div  id="00-05-22" class="function">int NOE_ConvierteTileAMundoY(int y)</div>
 <div class="definition">
 <p>Convierte una coordenada Y en sistema de tilemap al sistema de mundo</p>
 <p class="params">Parámetros:</p>
