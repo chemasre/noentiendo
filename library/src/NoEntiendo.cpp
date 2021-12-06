@@ -56,6 +56,7 @@ void NOE_DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int al
 
 void NOE_DibujaDisco(int x, int y, int radio, int r, int g, int b) { NOEGraficos::DibujaDisco(x, y, radio, r, g, b); }
 void NOE_DibujaCaja(int x, int y, int ancho, int alto, int r, int g, int b) { NOEGraficos::DibujaCaja(x, y, ancho, alto, r, g, b); }
+void NOE_DibujaForma(int forma, int x, int y, int ancho, int alto, int r, int g, int b) { NOEGraficos::DibujaForma(forma, x, y, ancho, alto, r, g, b); }
 
 int NOE_ConviertePantallaAMundoX(int x) { return NOEGraficos::ConviertePantallaAMundoX(x); }
 int NOE_ConviertePantallaAMundoY(int y) { return NOEGraficos::ConviertePantallaAMundoY(y); }

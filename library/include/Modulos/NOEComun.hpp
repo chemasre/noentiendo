@@ -13,9 +13,9 @@
 #include <ctype.h>
 #include <process.h>
 
-
-
-const char noeVersion[] = "1.21";
+const char noeNombreLibreria[] = "NoEntiendo";
+const int noeVersionMajor = 2;
+const int noeVersionMinor = 22;
 
 #include "NOEConfiguracion.hpp"
 #include "NOERecursos.hpp"

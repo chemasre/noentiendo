@@ -26,6 +26,7 @@ const int noe_tileVacio    = 0;
 
 const int noe_tileColisionVacio    = 0;
 
+
 // Enums
 
 ///
@@ -160,6 +161,7 @@ void NOE_DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int al
 
 void NOE_DibujaDisco(int x, int y, int radio, int r, int g, int b);
 void NOE_DibujaCaja(int x, int y, int ancho, int alto, int r, int g, int b);
+void NOE_DibujaForma(int forma, int x, int y, int ancho, int alto, int r, int g, int b);
 
 // Cambios de coordenadas
 

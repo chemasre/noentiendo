@@ -35,6 +35,7 @@ namespace NOEGraficos
 	int ObtenAltoTilemap();
 	void DibujaDisco(int x, int y, int radio, int r, int g, int b);
 	void DibujaCaja(int x, int y, int ancho, int alto, int r, int g, int b);
+	void DibujaForma(int forma, int x, int y, int ancho, int alto, int r, int g, int b);
 	void DibujaDecorado(int decorado);
 	void DibujaCaracter(char caracter, int x, int y, int ancho, int alto, int font);
 	void DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int altoCaracter, int font);

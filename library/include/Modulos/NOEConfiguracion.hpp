@@ -27,6 +27,7 @@ namespace NOEConfiguracion
 		int numMusicas = 8;
 		int numSonidos = 32;
 		int numCanales = 16;
+		int numFormas = 32;
 		int tiempoMinimoActualizacion = 10;
 		int longitudLineaEntrada = 100;
 	};

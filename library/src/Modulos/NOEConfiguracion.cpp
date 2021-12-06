@@ -2,8 +2,6 @@
 
 namespace NOEConfiguracion
 {
-	const int noeConfigurationMaxLinea = 200;
-
 	Configuracion configuracion;
 
 	Configuracion& ObtenConfiguracion()
@@ -17,123 +15,47 @@ namespace NOEConfiguracion
 
 		configuracion = Configuracion();
 
-		char linea1[noeConfigurationMaxLinea];
-		char linea2[noeConfigurationMaxLinea];
-		FILE* f = fopen("configuracion.ini","r");
-		char* r = 0;
 
-		do
+		FILE* fichero;	
+		char nombre[noeRecursosMaxLinea];
+		char valor[noeRecursosMaxLinea];
+		
+		fichero = AbreRecurso("configuracion.ini");
+		
+		while(LeePropiedad(fichero, nombre, valor))
 		{
-			r = fgets(linea1, noeConfigurationMaxLinea, f);
-
-			if(r != 0)
+			if(strcmp(nombre, "TAMANYOTILE") == 0)
 			{
-				// Trim line
-
-				int j = 0;
-				for(int i = 0; i < strlen(linea1); i ++)
-				{
-					if(linea1[i] != ' ' && linea1[i] != '\t' && linea1[i] != '\n')
-					{
-						linea2[j] = toupper(linea1[i]);
-						j ++;
-					}
-				}
-
-				linea2[j] = 0;
-
-				//printf("Trimeada \"%s\"\n", linea2);
-
-				if(strlen(linea2) == 0)
-				{
-					// Skip line
-					//printf("Linea vacia\n");
-				}
-				else if(linea2[0] == '#')
-				{
-					// Skip line
-					//printf("Comentario\n");
-				}
-				else
-				{
-					// Parse line
-
-					char parte1[noeConfigurationMaxLinea];
-					char parte2[noeConfigurationMaxLinea];
-
-					int j = 0;
-					int foundSeparator = 0;
-					for(int i = 0; i < strlen(linea2); i++)
-					{
-						if(!foundSeparator)
-						{
-							if(linea2[i] == ':')
-							{
-								//printf("Separador\n");
-								foundSeparator = 1;
-								parte1[j] = 0;
-								j = 0;
-							}
-							else
-							{
-								//printf("Copiando1\n");
-								parte1[j] = linea2[i];
-								j ++;
-							}
-						}
-						else
-						{
-							//printf("Copiando2\n");
-							parte2[j] = linea2[i];
-							j ++;
-						}
-						
-					}
-
-					parte2[j] = 0;
-
-					//printf("Parseada => \"%s\" : \"%s\"\n", parte1, parte2);
-
-					if(strcmp(parte1, "TAMANYOTILE") == 0)
-					{
-						configuracion.tamanyoTile = atoi(parte2);
-					}
-					else if(strcmp(parte1, "ANCHOTILEMAPS") == 0)
-					{
-						configuracion.anchoTilemaps = atoi(parte2);
-					}
-					else if(strcmp(parte1, "ALTOTILEMAPS") == 0)
-					{
-						configuracion.altoTilemaps = atoi(parte2);
-					}
-					else if(strcmp(parte1, "ANCHOPANTALLA") == 0)
-					{
-						configuracion.anchoPantalla = atoi(parte2);
-					}
-					else if(strcmp(parte1, "ALTOPANTALLA") == 0)
-					{
-						configuracion.altoPantalla = atoi(parte2);
-					}
-					else if(strcmp(parte1, "PANTALLACOMPLETA") == 0)
-					{
-						configuracion.pantallaCompleta = atoi(parte2);
-					}
-					else if(strcmp(parte1, "LONGITUDLINEAENTRADA") == 0)
-					{
-						configuracion.longitudLineaEntrada = atoi(parte2);
-					}
-					
-				}
-
-				
-
+				configuracion.tamanyoTile = ObtenEntero(valor);
 			}
-
-
-
-		} while(r > 0);
-
-		fclose(f);
+			else if(strcmp(nombre, "ANCHOTILEMAPS") == 0)
+			{
+				configuracion.anchoTilemaps = ObtenEntero(valor);
+			}
+			else if(strcmp(nombre, "ALTOTILEMAPS") == 0)
+			{
+				configuracion.altoTilemaps = ObtenEntero(valor);
+			}
+			else if(strcmp(nombre, "ANCHOPANTALLA") == 0)
+			{
+				configuracion.anchoPantalla = ObtenEntero(valor);
+			}
+			else if(strcmp(nombre, "ALTOPANTALLA") == 0)
+			{
+				configuracion.altoPantalla = ObtenEntero(valor);
+			}
+			else if(strcmp(nombre, "PANTALLACOMPLETA") == 0)
+			{
+				configuracion.pantallaCompleta = ObtenEntero(valor);
+			}
+			else if(strcmp(nombre, "LONGITUDLINEAENTRADA") == 0)
+			{
+				configuracion.longitudLineaEntrada = ObtenEntero(valor);
+			}
+			
+		}
+		
+		CierraRecurso(fichero);		
 
 		printf("Configuracion:\n");
 		printf("\n");
@@ -148,6 +70,7 @@ namespace NOEConfiguracion
 		printf("  numSprites............ %d\n", configuracion.numSprites);
 		printf("  numDecorados.......... %d\n", configuracion.numDecorados);
 		printf("  numFuentes............ %d\n", configuracion.numFuentes);
+		printf("  numFormas............. %d\n", configuracion.numFormas);
 		printf("  numCursores........... %d\n", configuracion.numCursores);
 		printf("  cursor................ %d\n", configuracion.cursor);
 		printf("  anchoCursor........... %d\n", configuracion.anchoCursor);

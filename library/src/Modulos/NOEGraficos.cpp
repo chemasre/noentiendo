@@ -6,7 +6,7 @@ namespace NOEGraficos
 	int camaraX = 0;
 	int camaraY = 0;
 
-
+	sfConvexShape** formas;
 
 	sfSprite**		sprites;
 
@@ -73,6 +73,27 @@ namespace NOEGraficos
 		
 		formaDisco = sfCircleShape_create();
 		formaCaja = sfRectangleShape_create();
+		
+		formas = new sfConvexShape*[c.numFormas];
+		
+		for(int i = 0; i < c.numFormas; i ++)
+		{
+			NOEDatosForma* datosForma = ObtenDatosForma(i);
+			
+			sfConvexShape* forma = sfConvexShape_create();
+			
+			sfConvexShape_setPointCount(forma, datosForma->numPuntos);
+			
+			for(int j = 0; j < datosForma->numPuntos; j ++)
+			{
+				sfVector2f punto = { (float)datosForma->puntos[j * 2],  (float)datosForma->puntos[j * 2 + 1] };
+				sfConvexShape_setPoint(forma, j, punto);
+				
+			}
+			
+			formas[i] = forma;
+			
+		}
 		
 		// Iniciar decorados
 		
@@ -266,6 +287,20 @@ namespace NOEGraficos
 		sfRectangleShape_setFillColor(formaCaja, color);
 		
 		sfRenderWindow_drawRectangleShape(ventana, formaCaja, NULL);
+	}
+	
+	void DibujaForma(int forma, int x, int y, int ancho, int alto, int r, int g, int b)
+	{
+		sfRenderWindow *ventana = ObtenVentana();
+		sfFloatRect rect = sfConvexShape_getLocalBounds(formas[forma]);
+		sfVector2f escala = { ancho / rect.width, alto / rect.height };		
+		sfVector2f posicion = { (float)x - rect.left * escala.x - camaraX, (float)y  - rect.top * escala.y - camaraY };
+		sfConvexShape_setPosition(formas[forma], posicion);
+		sfConvexShape_setScale(formas[forma], escala);
+		sfColor color = sfColor_fromRGB(r, g, b);
+		sfConvexShape_setFillColor(formas[forma], color);		
+		
+		sfRenderWindow_drawConvexShape(ventana, formas[forma], NULL);
 	}
 
 	void DibujaDecorado(int decorado)

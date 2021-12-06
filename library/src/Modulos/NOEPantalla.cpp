@@ -5,7 +5,6 @@ namespace NOEPantalla
 	// Ventana
 
 	const int noeUIMaxCadena = 200;
-	char noeVentanaNombre[] = "NoEntiendo";
 
 	sfRenderWindow* ventana;
 	sfImage* icono;
@@ -37,7 +36,7 @@ namespace NOEPantalla
 
 		char titulo[noeUIMaxCadena];
 
-		sprintf(titulo, "%s Version %s", noeVentanaNombre, noeVersion);
+		sprintf(titulo, "%s Version %d.%d", noeNombreLibreria, noeVersionMajor, noeVersionMinor);
 
 		int style = sfTitlebar;
 		

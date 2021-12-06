@@ -5,7 +5,7 @@ namespace NOEPrincipal
 	bool Inicia()
 	{
 		printf("----------------------------------------------\n");
-		printf("  %s Version %s\n", noeVentanaNombre, noeVersion);
+		printf("  %s Version %d.%d\n", noeNombreLibreria, noeVersionMajor, noeVersionMinor);
 		printf("----------------------------------------------\n");
 		printf("\n");
 
