@@ -130,6 +130,7 @@ h2
 	padding:5pt;
 }
 
+
 .indexBox h1, .indexBox h2, .indexBox .function
 {
 	margin:3pt;
@@ -148,7 +149,7 @@ h2
 	margin-bottom:8pt;
 }
 
-.indexBox .function
+.indexBox .function, .indexBox .version
 {
 	font-size:9pt;
 	margin-left:12pt;
