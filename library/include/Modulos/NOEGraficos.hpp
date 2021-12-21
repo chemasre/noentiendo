@@ -16,6 +16,10 @@ namespace NOEGraficos
 	void RellenaTilemap(int tilemap, int tipoBloque);
 	int ObtenAnchoTilemap();
 	int ObtenAltoTilemap();
+	int ObtenAnchoGlifo(int glifo, int fuente);
+	int ObtenAltoGlifo(int glifo, int fuente);
+	void DibujaGlifo(int glifo, int x, int y, int ancho, int alto, int font);
+	int BuscaGlifo(char caracter);
 	
 	
 	// Library functions

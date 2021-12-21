@@ -36,6 +36,14 @@ namespace NOEConfiguracion
 			{
 				configuracion.altoTilemaps = ObtenEntero(valor);
 			}
+			else if(strcmp(nombre, "NUMTIPOSTILE") == 0)
+			{
+				configuracion.numTiposTile = ObtenEntero(valor);
+			}
+			else if(strcmp(nombre, "NUMTILEMAPS") == 0)
+			{
+				configuracion.numTilemaps = ObtenEntero(valor);
+			}
 			else if(strcmp(nombre, "ANCHOPANTALLA") == 0)
 			{
 				configuracion.anchoPantalla = ObtenEntero(valor);
@@ -52,6 +60,22 @@ namespace NOEConfiguracion
 			{
 				configuracion.longitudLineaEntrada = ObtenEntero(valor);
 			}
+			else if(strcmp(nombre, "NUMSPRITES") == 0)
+			{
+				configuracion.numSprites = ObtenEntero(valor);
+			}			
+			else if(strcmp(nombre, "NUMDECORADOS") == 0)
+			{
+				configuracion.numDecorados = ObtenEntero(valor);
+			}			
+			else if(strcmp(nombre, "NUMMUSICAS") == 0)
+			{
+				configuracion.numMusicas = ObtenEntero(valor);
+			}			
+			else if(strcmp(nombre, "NUMFORMAS") == 0)
+			{
+				configuracion.numFormas = ObtenEntero(valor);
+			}			
 			
 		}
 		

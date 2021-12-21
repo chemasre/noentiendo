@@ -13,6 +13,8 @@ void NOE_Finaliza() { NOEPrincipal::Finaliza(); }
 
 void NOE_LimpiaPantalla(int r, int g, int b) { NOEPantalla::LimpiaPantalla(r, g, b); }
 void NOE_MuestraPantalla() { NOEPantalla::MuestraPantalla(); }
+int NOE_ObtenAnchoPantalla() { return NOEPantalla::ObtenAnchoPantalla(); }
+int NOE_ObtenAltoPantalla() { return NOEPantalla::ObtenAltoPantalla(); }
 
 void NOE_PonCursor(int cursor) { NOEPantalla::PonCursor(cursor); }
 void NOE_PonMostrarCursor(bool mostrar) { NOEPantalla::PonMostrarCursor(mostrar); }

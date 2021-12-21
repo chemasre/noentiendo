@@ -107,6 +107,19 @@ namespace NOEPantalla
 	{
 		return ventana;
 	}
+	
+	int ObtenAnchoPantalla()
+	{
+		Configuracion &c = ObtenConfiguracion();	
+		return c.anchoPantalla;
+	}
+	
+	int ObtenAltoPantalla()
+	{
+		Configuracion &c = ObtenConfiguracion();	
+		return c.altoPantalla;
+	}
+	
 
 
 	void PonCursor(int c)

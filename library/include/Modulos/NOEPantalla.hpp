@@ -13,11 +13,14 @@ namespace NOEPantalla
 	// Library funcions
 	
 	void LimpiaPantalla(int r, int g, int b);
+	int ObtenAnchoPantalla();
+	int ObtenAltoPantalla();
 	void MuestraPantalla();
 	void PonCursor(int c);
 	void PonMostrarCursor(bool mostrar);
 	void PonTamanyoCursor(int ancho, int alto);
 	void PonDesplazamientoCursor(int x, int y);
+	
 }
 
 #endif

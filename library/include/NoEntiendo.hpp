@@ -106,8 +106,9 @@ void NOE_Finaliza();
 // Pantalla
 
 void NOE_LimpiaPantalla(int r, int g, int b);
-
 void NOE_MuestraPantalla();
+int NOE_ObtenAnchoPantalla();
+int NOE_ObtenAltoPantalla();
 
 // Cursor
 

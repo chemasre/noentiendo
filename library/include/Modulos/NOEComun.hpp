@@ -15,7 +15,7 @@
 
 const char noeNombreLibreria[] = "NoEntiendo";
 const int noeVersionMajor = 2;
-const int noeVersionMinor = 22;
+const int noeVersionMinor = 23;
 
 #include "NOEConfiguracion.hpp"
 #include "NOERecursos.hpp"

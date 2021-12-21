@@ -149,17 +149,26 @@ namespace NOEGraficos
 
 	void DibujaSprite(int sprite, int x, int y, int ancho, int alto, bool invertirX, bool invertirY)
 	{
+		int ancho2;
+		int alto2;
+		
 		sfRenderWindow *ventana = ObtenVentana();
 		sfSprite* sprite2 = sprites[sprite];
 		
 		
 		const sfTexture* textura = sfSprite_getTexture(sprite2);
 		sfVector2u tamanyo = sfTexture_getSize(textura);
-
-		sfVector2f escala = { (invertirX ? -1: 1) * (float)ancho / tamanyo.x, (invertirY ? -1: 1) * (float)alto / tamanyo.y  };
+		
+		ancho2 = ancho;
+		alto2 = alto;
+		
+		if(alto < 0) { alto2 = tamanyo.y; }
+		if(ancho < 0) { ancho2 = tamanyo.x; }
+		
+		sfVector2f escala = { (invertirX ? -1: 1) * (float)ancho2 / tamanyo.x, (invertirY ? -1: 1) * (float)alto2 / tamanyo.y  };
 		sfSprite_setScale(sprite2, escala);
 
-		sfVector2f position = { (invertirX ? 1 : 0) * ancho + (float)x - camaraX, (invertirY ? 1 : 0) * alto+ (float)y - camaraY };
+		sfVector2f position = { (invertirX ? 1 : 0) * ancho2 + (float)x - camaraX, (invertirY ? 1 : 0) * alto2 + (float)y - camaraY };
 		sfSprite_setPosition(sprite2, position);
 
 		sfRenderWindow_drawSprite(ventana, sprite2, NULL);
@@ -323,11 +332,28 @@ namespace NOEGraficos
 		sfRenderWindow_drawSprite(ventana, decorado2, NULL);
 		
 	}
-
-	void DibujaCaracter(char caracter, int x, int y, int ancho, int alto, int font)
+	
+	int ObtenAnchoGlifo(int glifo, int font)
 	{
+		sfSprite* sprite = fuentes[font][glifo];
+		const sfTexture* textura = sfSprite_getTexture(sprite);
+		sfVector2u tamanyo = sfTexture_getSize(textura);		
 		
-		int glifo = 0;
+		return tamanyo.x;
+	}
+	
+	int ObtenAltoGlifo(int glifo, int font)
+	{
+		sfSprite* sprite = fuentes[font][glifo];
+		const sfTexture* textura = sfSprite_getTexture(sprite);
+		sfVector2u tamanyo = sfTexture_getSize(textura);		
+		
+		return tamanyo.y;		
+	}
+	
+	int BuscaGlifo(char caracter)
+	{
+		int glifo = -1;
 		bool found = false;
 		
 		int i = 0;
@@ -345,15 +371,28 @@ namespace NOEGraficos
 			}			
 			
 		}
-		
+
+		return glifo;		
+	}
+	
+	void DibujaGlifo(int glifo, int x, int y, int ancho, int alto, int font)
+	{
 		sfRenderWindow *ventana = ObtenVentana();
 		
 		sfSprite* sprite2 = fuentes[font][glifo];
+
+		int ancho2 = ancho;
+		int alto2 = alto;
 		
 		const sfTexture* textura = sfSprite_getTexture(sprite2);
 		sfVector2u tamanyo = sfTexture_getSize(textura);
 
-		sfVector2f escala = { (float)ancho / tamanyo.x, (float)alto / tamanyo.y  };
+		if(ancho < 0) { ancho2 = tamanyo.x; }		
+		if(alto < 0) { alto2 = tamanyo.y;  }
+		
+		
+
+		sfVector2f escala = { (float)ancho2 / tamanyo.x, (float)alto2 / tamanyo.y  };
 		sfSprite_setScale(sprite2, escala);
 
 		sfVector2f position = { (float)x, (float)y };
@@ -363,13 +402,36 @@ namespace NOEGraficos
 		
 	}
 
+
+	void DibujaCaracter(char caracter, int x, int y, int ancho, int alto, int font)
+	{
+		int glifo = BuscaGlifo(caracter);
+		if(glifo < 0) { glifo = 0; }
+		
+		DibujaGlifo(glifo, x, y, ancho, alto, font);
+		
+		
+	}
+
 	void DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int altoCaracter, int font)
 	{
 		//printf(texto);
 		int i = 0;
+		
 		while(texto[i] != '\0')
 		{
-			DibujaCaracter(texto[i], x + i * anchoCaracter, y, anchoCaracter, altoCaracter, font);
+			int glifo;
+			
+			int ancho2 = anchoCaracter;
+			int alto2 = altoCaracter;
+			
+			glifo = BuscaGlifo(texto[i]);
+			if(glifo < 0) { glifo = 0; }
+			
+			if(anchoCaracter < 0) { ancho2 = ObtenAnchoGlifo(glifo, font); }
+			if(altoCaracter < 0) { alto2 = ObtenAltoGlifo(glifo, font); }
+
+			DibujaGlifo(glifo, x + i * ancho2, y, ancho2, alto2, font);
 			
 			i ++;
 		}
