@@ -12,7 +12,7 @@
 <div class="header">
 <div class="title">NoEntiendo</div>
 </div>
-<h1><a href="#00-00">Referencia</a><div class="version">Versión 1.22</div></h1>
+<h1><a href="#00-00">Referencia</a><div class="version">Versión 1.23</div></h1>
 <h2><a href="#00-00-00">Constantes</a></h2>
 <div class="function"><a href="#00-00-01">noe_tileVacio</a></div>
 <div class="function"><a href="#00-00-02">noe_tileColisionVacio</a></div>
@@ -25,10 +25,12 @@
 <h2><a href="#00-03-00">Pantalla</a></h2>
 <div class="function"><a href="#00-03-01">NOE_LimpiaPantalla</a></div>
 <div class="function"><a href="#00-03-02">NOE_MuestraPantalla</a></div>
-<div class="function"><a href="#00-03-03">NOE_PonCursor</a></div>
-<div class="function"><a href="#00-03-04">NOE_PonMostrarCursor</a></div>
-<div class="function"><a href="#00-03-05">NOE_PonTamanyoCursor</a></div>
-<div class="function"><a href="#00-03-06">NOE_PonDesplazamientoCursor</a></div>
+<div class="function"><a href="#00-03-03">NOE_ObtenAnchoPantalla</a></div>
+<div class="function"><a href="#00-03-04">NOE_ObtenAltoPantalla</a></div>
+<div class="function"><a href="#00-03-05">NOE_PonCursor</a></div>
+<div class="function"><a href="#00-03-06">NOE_PonMostrarCursor</a></div>
+<div class="function"><a href="#00-03-07">NOE_PonTamanyoCursor</a></div>
+<div class="function"><a href="#00-03-08">NOE_PonDesplazamientoCursor</a></div>
 <h2><a href="#00-04-00">Entrada</a></h2>
 <div class="function"><a href="#00-04-01">NOE_ObtenEntrada</a></a></div>
 <div class="function"><a href="#00-04-02">NOE_LimpiaEntrada</a></div>
@@ -186,27 +188,38 @@
 <div class="definition">
 <p>Hace visible el contenido del buffer de pantalla</p>
 </div>
-
-<div id="00-03-03" class="function">void NOE_PonCursor(int cursor)</div>
+<div id="00-03-03" class="function">int NOE_ObtenAnchoPantalla()</div>
+<div class="definition">
+<p>Permite obtener el ancho de la pantalla</p>
+<p class="returns">Devuelve:</p>
+<p class="return">Ancho de la pantalla en unidades de pantalla.</p>
+</div>
+<div id="00-03-04" class="function">int NOE_ObtenAltoPantalla()</div>
+<div class="definition">
+<p>Permite obtener el alto de la pantalla</p>
+<p class="returns">Devuelve:</p>
+<p class="return">Alto de la pantalla en unidades de pantalla.</p>
+</div>
+<div id="00-03-05" class="function">void NOE_PonCursor(int cursor)</div>
 <div class="definition">
 <p>Establece el tipo de cursor que se mostrará</p>
 <p class="params">Parámetros</p>
 <p class="param">cursor: Índice del cursor que se mostrará</p>
 </div>
-<div id="00-03-04" class="function">void NOE_PonMostrarCursor(bool mostrar)</div>
+<div id="00-03-06" class="function">void NOE_PonMostrarCursor(bool mostrar)</div>
 <div class="definition">
 <p>Establece si se mostará o no un cursor</p>
 <p class="params">Parámetros</p>
 <p class="param">mostrar: Si se ha de mostrar el cursor o no</p>
 </div>
-<div id="00-03-05" class="function">void NOE_PonTamanyoCursor(int ancho, int alto)</div>
+<div id="00-03-07" class="function">void NOE_PonTamanyoCursor(int ancho, int alto)</div>
 <div class="definition">
 <p>Cambia el tamaño del cursor</p>
 <p class="params">Parámetros</p>
 <p class="param">ancho: Ancho del cursor en coordenadas de pantalla</p>
 <p class="param">alto: Alto del cursor en coordenadas de pantalla</p>
 </div>
-<div id="00-03-06" class="function">void NOE_PonDesplazamientoCursor(int x, int y)</div>
+<div id="00-03-08" class="function">void NOE_PonDesplazamientoCursor(int x, int y)</div>
 <div class="definition">
 <p>Establece el desplazamiento que se aplicará al cursor respecto a la posición del ratón</p>
 <p class="params">Parámetros</p>
@@ -283,8 +296,8 @@
 <p class="param">sprite: Índice del sprite a dibujar.</p>
 <p class="param">x: Posición X donde se dibujará el sprite en coordenadas de mundo.</p>
 <p class="param">y: Posición Y donde se dibujará el sprite en coordenadas de mundo.</p>
-<p class="param">ancho: Ancho con que se dibujará el sprite en coordenadas de mundo.</p>
-<p class="param">alto: Alto con que se dibujará el sprite en coordenadas de mundo.</p>
+<p class="param">ancho: Ancho con que se dibujará el sprite en coordenadas de mundo o -1 para dibujarlo con el ancho original del sprite.</p>
+<p class="param">alto: Alto con que se dibujará el sprite en coordenadas de mundo o -1 para dibujarlo con el ancho original del sprite.</p>
 <p class="param">invertirX: 1 si queremos invertir horizontalmente el sprite y 0 si no.</p>
 <p class="param">invertirY: 1 si queremos invertir verticalmente el sprite y 0 si no.</p>
 </div>
@@ -303,8 +316,8 @@
 <p class="param">caracter: Carácter a dibujar.</p>
 <p class="param">x: Posición X en que se dibujará el carácter en coordenadas de pantalla.</p>
 <p class="param">y: Posición Y en que se dibujará el carácter en coordenadas de pantalla.</p>
-<p class="param">ancho: Ancho con que se dibujará el carácter en coordenadas de pantalla.</p>
-<p class="param">alto: Alto con que se dibujará el carácter en coordenadas de pantalla.</p>
+<p class="param">ancho: Ancho con que se dibujará el carácter en coordenadas de pantalla o -1 para dibujarlo con el ancho original del carácter en la fuente especificada.</p>
+<p class="param">alto: Alto con que se dibujará el carácter en coordenadas de pantalla o -1 para dibujarlo con el alto original del carácter en la fuente especificada.</p>
 <p class="param">fuente: Índice de la fuente con que se dibujará el carácter.</p>
 </div>
 <div id="00-05-11" class="function">void NOE_DibujaTexto(const char texto[], int x, int y, int anchoCaracter, int altoCaracter, int font)</div>
@@ -314,8 +327,8 @@
 <p class="param">texto: Cadena a dibujar.</p>
 <p class="param">x: Posición X en que se dibujará la cadena en coordenadas de pantalla.</p>
 <p class="param">y: Posición Y en que se dibujará la cadena en coordenadas de pantalla.</p>
-<p class="param">ancho: Ancho con que se dibujará el carácter en coordenadas de pantalla.</p>
-<p class="param">alto: Alto con que se dibujará el carácter en coordenadas de pantalla.</p>
+<p class="param">ancho: Ancho con que se dibujarán los carácteres en coordenadas de pantalla o -1 para dibujarlo con el ancho original de los carácteres en la fuente especificada.</p>
+<p class="param">alto: Alto con que se dibujarán los carácteres en coordenadas de pantalla o -1 para dibujarlo con el alto original de los carácteres en la fuente especificada.</p>
 <p class="param">fuente: Índice de la fuente con que se dibujará el carácter.</p>
 </div>
 <div  id="00-05-12" class="function">void NOE_DibujaDisco(int x, int y, int radio, int r, int g, int b)</div>
@@ -543,7 +556,7 @@
 <p class="param">canal: Índice del canal en que se está reproduciendo el sonido.</p>
 </div>
 <h1 id="01">Licencias</h1>
-<h2 id="01-01-00">Librería NoEntiendo</h2>
+<h2 id="01-01-00">Librería</h2>
 <pre>
 +----------------------------------------------------------------------+
 |                                                                      |
